@@ -1,13 +1,9 @@
 package com.zxhz.controller;
-
 import com.zxhz.controller.abs.AbstractBaseController;
 import com.zxhz.utils.JxlsUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
