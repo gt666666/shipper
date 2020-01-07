@@ -1,5 +1,7 @@
 package com.zxhz.controller.abs;
 
+import com.zxhz.enums.ResultEnum;
+import com.zxhz.pojo.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import java.util.Locale;
@@ -15,5 +17,18 @@ public abstract class AbstractBaseController {
 
     public String getMessage(String key, String... args) {
         return this.messageSource.getMessage(key, args, Locale.getDefault());
+    }
+    public CommonResult  resultWrapper(ResultEnum resultEnum ){
+        CommonResult  commonResult=new CommonResult();
+        commonResult.setCode(resultEnum.getCode());
+        commonResult.setMsg(resultEnum.getMessage());
+        return   commonResult;
+    }
+    public CommonResult  resultDataWrapper(ResultEnum resultEnum,Object obj ){
+        CommonResult  commonResult=new CommonResult();
+        commonResult.setCode(resultEnum.getCode());
+        commonResult.setMsg(resultEnum.getMessage());
+        commonResult.setData(obj);
+        return   commonResult;
     }
 }

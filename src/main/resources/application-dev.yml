@@ -7,7 +7,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource  #配置当前要使用的数据源的操作类型
     driver-class-name: org.gjt.mm.mysql.Driver  #配置MySQL的驱动程序类
-    url: jdbc:mysql://localhost:3306/shipper?useUnicode=true&characterEncoding=UTF-8  #数据库连接地址
+    url: jdbc:mysql://127.0.0.1:3306/shipper?useUnicode=true&characterEncoding=UTF-8  #数据库连接地址
     username: root   #数据库用户名
     password: root   #数据库连接密码
     dbcp2:   #进行数据库连接池的配置
@@ -15,6 +15,18 @@ spring:
       initial-size: 5   #初始化提供的连接数
       max-total: 5   #最大的连接数
       max-wait-millis: 200   #等待连接获取的最大超时时间
+  servlet:
+    multipart:
+      enabled: true   #启动上传配置
+      max-file-size: 10MB #设置单个上传文件大小的限制
+      max-request-size: 20MB #设置总体上传大小的限制
+      file-size-threshold: 521KB #每当达到512KB的时候内容写入磁盘
+      location: / #设置上传目录
+  data:
+    mongodb:
+      host: 127.0.0.1
+      database: shipper
+      port: 27017
   redis:
     database: 0    #表示使用的Redis库的编号，Redis中提供了16个database，编号为0~15
     host: 127.0.0.1
@@ -31,3 +43,10 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml    #mybatis配置文件所在路径
   type-aliases-package: com.zxkj.vo      #定义所有操作类的别名所在包
   mapper-locations: classpath:mybatis/mapper/**/*.xml  #所有的mapper映射文件
+
+
+logging:
+  level:
+    com.zxhz: debug
+  file: E:/shipper/log.log
+

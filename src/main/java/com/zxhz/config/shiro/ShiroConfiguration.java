@@ -36,7 +36,6 @@ public class ShiroConfiguration {
     }
 
     //3.配置shiro的过滤器工厂
-
     /**
      * 再web程序中，shiro进行权限控制全部是通过一组过滤器集合进行控制
      */
@@ -57,14 +56,14 @@ public class ShiroConfiguration {
          *
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
+        //filterMap.put("/login","anon");  //开放权限，可以理解为匿名用户或游客
+        //filterMap.put("/**", "authc");//当前请求地址必须认证之后可以访问
         //使用过滤器的形式配置请求地址的依赖权限
         //filterMap.put("/member/home", "perms[dept:list]"); //不具备指定的权限，跳转到setUnauthorizedUrl地址
         //使用过滤器的形式配置请求地址的依赖角色
-        //filterMap.put("/member/home","roles[dept]");//不具备指定的角色，跳转到setUnauthorizedUrl地址
+        //filterMap.put("/member/home","roles[dept]");//不具备指定的角色,跳转到setUnauthorizedUrl地址
         // filterMap.put("/member/home","anon");  //开放权限，可以理解为匿名用户或游客
-        filterMap.put("/member/**", "authc");//当前请求地址必须认证之后可以访问
         filterFactory.setFilterChainDefinitionMap(filterMap);
-
         return filterFactory;
     }
 
@@ -111,7 +110,7 @@ public class ShiroConfiguration {
     }
 
 
-    //开启对shior注解的支持
+    //开启对shiro注解的支持
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

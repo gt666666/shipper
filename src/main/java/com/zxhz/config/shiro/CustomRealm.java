@@ -23,8 +23,10 @@ public class CustomRealm extends AuthorizingRealm {
     public void setName(String name) {
         super.setName("customRealm");
     }
+
     @Autowired
     private MemberServiceImpl memberService;
+
     /**
      * 认证方法
      * 参数：传递的用户名密码
@@ -61,6 +63,7 @@ public class CustomRealm extends AuthorizingRealm {
      * 再授权 -- 根据安全数据获取用户具有的所有操作权限
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("PrincipalCollectionPrincipalCollectionPrincipalCollection");
         //1.获取已认证的用户数据
         Member member = (Member) principalCollection.getPrimaryPrincipal();//得到唯一的安全数据
         //2.根据用户数据获取用户的权限信息（所有角色，所有权限）
@@ -69,14 +72,11 @@ public class CustomRealm extends AuthorizingRealm {
         Set<String> allRoles = new HashSet<>();//所有角色
         Set<String> allActions = new HashSet<>();//所有权限
         allRoles.addAll(map.get("allRoles"));
-		allActions.addAll(map.get("allActions")) ;
+        allActions.addAll(map.get("allActions"));
         info.setStringPermissions(allActions);
         info.setRoles(allRoles);
         return info;
     }
-
-
-
 
 
     public static void main(String[] args) {

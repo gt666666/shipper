@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxhz.dao.IUserInfoDAO">
+    <resultMap id="UserInfoResultMap" type="com.zxhz.pojo.UserInfo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="birthday" property="birthday"/>
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <result column="is_lock" property="isLock"/>
+        <result column="create_date" property="createDate"/>
+        <result column="every_tip" property="everyTip"/>
+        <result column="money" property="money"/>
+        <result column="img" property="img"/>
+        <result column="hobby" property="hobby"/>
+        <result column="remark" property="remark"/>
+        <result column="city" property="city"/>
+        <result column="education" property="education"/>
+    </resultMap>
+    <sql id="base">
+        id,name,birthday,age,gender,is_lock,create_date,every_tip,money,img,hobby,remark,city,education
+    </sql>
+    <!-- #{name},#{birthday},#{age},#{gender},#{lock},#{createDate},#{everyTip},#{money},#{img},#{hobby},#{remark},#{city}-->
+    <insert id="insert" parameterType="com.zxhz.pojo.UserInfo" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO   user_info (name,birthday,every_tip,city,is_lock,gender,remark,money,hobby,create_date,education,img)VALUES (#{name},#{birthday},#{everyTip},#{city},#{isLock},#{gender},#{remark},#{money},#{hobby},#{createDate},#{education},#{img})
+    </insert>
+
+    <select id="findByQuery" resultMap="UserInfoResultMap">
+        SELECT
+        <include refid="base"/>
+        FROM user_info
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            <if test="name !=null and name !=''">
+                <bind  name="name"  value="'%'+name+'%'"/>
+                AND name LIKE  #{name}
+            </if>
+            <if test="birthday !=null">
+                AND birthday=#{birthday}
+            </if>
+        </trim>
+    </select>
+    <update id="updateById" parameterType="com.zxhz.pojo.UserInfo">
+        UPDATE user_Info
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="isLock!=null">
+                is_lock=#{isLock},
+            </if>
+            <if test="createDate!=null">
+                create_date=#{createDate},
+            </if>
+            <if test="everyTip!=null">
+                every_tip=#{everyTip},
+            </if>
+            <if test="money!=null">
+                money=#{money},
+            </if>
+            <if test="img!=null">
+                img=#{img},
+            </if>
+            <if test="hobby!=null">
+                hobby=#{hobby},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="education!=null">
+                education=#{education},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+</mapper>
