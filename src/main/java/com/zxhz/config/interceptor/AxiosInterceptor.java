@@ -16,17 +16,17 @@ public class AxiosInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
-        String token=request.getHeader("token");  //随头信息发送token
-        System.err.println("【AxiosInterceptor.preHandle()】接收客户端发送的Token头信息:"+token);
-        if(token==null||"undefined".equals(token)){   //没有指定的token
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //设置状态码  401
-            try {
-                response.getWriter().write(String.format("{'code':%s,'message':'%s'}", HttpServletResponse.SC_UNAUTHORIZED, "Invlidate Request Token"));
-                return  false;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String token=request.getHeader("token");  //随头信息发送token
+//        System.err.println("【AxiosInterceptor.preHandle()】接收客户端发送的Token头信息:"+token);
+//        if(token==null||"undefined".equals(token)){   //没有指定的token
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //设置状态码  401
+//            try {
+//                response.getWriter().write(String.format("{'code':%s,'message':'%s'}", HttpServletResponse.SC_UNAUTHORIZED, "Invlidate Request Token"));
+//                return  false;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return true;
     }
 }

@@ -1,7 +1,5 @@
 package com.zxhz;
-
 import javax.annotation.Resource;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.poi.excel.ExcelReader;
@@ -11,6 +9,7 @@ import cn.hutool.poi.excel.cell.CellUtil;
 import com.zxhz.dao.IUserInfoDAO;
 import com.zxhz.enums.ResultEnum;
 import com.zxhz.pojo.Course;
+import com.zxhz.pojo.HGpsCarInfo;
 import com.zxhz.pojo.Student;
 import com.zxhz.utils.JxlsUtil;
 import org.jxls.common.Context;
@@ -23,10 +22,13 @@ import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SpringBootTest(classes = ShipperApplication.class)
@@ -193,11 +195,24 @@ public class TestCommon {
 
     }
 
-    @Resource
-    private IUserInfoDAO iUserInfoDAO;
+
 
     @Test
     public void testMongo() throws Exception {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(1575291448000L);
+        System.out.println(format);
+    }
+    @Test
+    public void testMongoExcel() throws Exception {
+       Set<String>  set=new HashSet<>();
+       set.add("5");
+       set.add("1");
+       set.add("3");
+        Iterator<String> iterator = set.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
 
     }
 }

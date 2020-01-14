@@ -10,6 +10,7 @@ import com.zxhz.service.MemberServiceImpl;
 import com.zxhz.utils.Page;
 import com.zxhz.utils.PaginationContext;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
  * 创建日期 ： 2019/11/20
  */
 @RestController
+@Slf4j
 public class MemberController extends AbstractBaseController {
     @Resource
     private MemberServiceImpl memberService;
@@ -67,8 +69,8 @@ public class MemberController extends AbstractBaseController {
 
     @PostMapping("/insertUserInfo")
     public CommonResult insertUserInfo(UserInfo userInfo, MultipartFile photo) {
-        System.out.println("******" + userInfo);
-        String pathName = "/usr/data/www/images/";//想要存储文件的地址
+       String pathName = "/usr/data/www/images/";//想要存储文件的地址
+        //String  pathName="F:\\image\\";
         String pname = "";
         if (photo != null) {
             pname = photo.getOriginalFilename();//获取文件名（包括后缀）
@@ -96,7 +98,7 @@ public class MemberController extends AbstractBaseController {
         }
         userInfo.setCreateDate(new Date());
         userInfo.setHobby(str);
-        userInfo.setImg("192.168.27.128/images/" + pname);
+        userInfo.setImg("images/"+pathName);
         int i = this.memberService.insertUserInfo(userInfo);
         if (i == 1) {
             return resultWrapper(ResultEnum.INSERT_SUCCESS);
@@ -154,7 +156,6 @@ public class MemberController extends AbstractBaseController {
          */
 
         password = new Md5Hash(password, mid, 3).toString();
-
         UsernamePasswordToken upToken = new UsernamePasswordToken(mid, password);
         //1.获取subject
         Subject subject = SecurityUtils.getSubject();
@@ -167,7 +168,8 @@ public class MemberController extends AbstractBaseController {
         subject.login(upToken);
         Map<String, Set<String>> mRolesActions = this.memberService.listAuthByMember(mid);//获取用户的角色和权限
         map.put("mRolesActions", mRolesActions);  //登录的用户角色和权限
-        this.redisTemplate.opsForHash().putAll(session, map);
+        this.redisTemplate.opsForHash().putAll(session,map);
+        this.redisTemplate.expire(session,8,TimeUnit.HOURS);   //登录信息8小时后过期
         return resultDataWrapper(ResultEnum.LOGIN_SUCCESS, map); //返回登录成功信息、session,用户名信息
     }
 
