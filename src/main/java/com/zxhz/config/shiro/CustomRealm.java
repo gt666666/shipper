@@ -32,6 +32,7 @@ public class CustomRealm extends AuthorizingRealm {
      * 参数：传递的用户名密码
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.err.println("认证");
         //1.获取登录的用户名密码（token）
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String mid = upToken.getUsername();
@@ -53,6 +54,7 @@ public class CustomRealm extends AuthorizingRealm {
         //6.如果一致返回安全数据
         //构造方法：安全数据，密码，realm域名
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(member, member.getPassword(), this.getName());
+        System.err.println(info);
         return info;
     }
 
@@ -63,7 +65,7 @@ public class CustomRealm extends AuthorizingRealm {
      * 再授权 -- 根据安全数据获取用户具有的所有操作权限
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("PrincipalCollectionPrincipalCollectionPrincipalCollection");
+        System.out.println("授权");
         //1.获取已认证的用户数据
         Member member = (Member) principalCollection.getPrimaryPrincipal();//得到唯一的安全数据
         //2.根据用户数据获取用户的权限信息（所有角色，所有权限）

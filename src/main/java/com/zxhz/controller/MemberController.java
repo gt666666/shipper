@@ -46,15 +46,21 @@ public class MemberController extends AbstractBaseController {
      * 1.过滤器：如果权限信息不匹配跳转setUnauthorizedUrl地址
      * 2.注解：如果权限信息不匹配，抛出异常
      */
-    @RequiresPermissions("dept:list")
+//    @RequiresPermissions("dept:list")
     @GetMapping("/member/home")
     public String home() {
-        return "访问主页";
+        return "zhuye";
     }
 
     @GetMapping("/member/findById")
     public Member findById(String mid) {
         return this.memberService.findById(mid);
+    }
+
+    @GetMapping("/member/getInfo")
+    public void getInfo(String msg ,String  info) {
+        System.out.println(msg);
+        System.out.println(info);
     }
 
     @GetMapping("/member/listAuthByMember")
@@ -169,7 +175,7 @@ public class MemberController extends AbstractBaseController {
         Map<String, Set<String>> mRolesActions = this.memberService.listAuthByMember(mid);//获取用户的角色和权限
         map.put("mRolesActions", mRolesActions);  //登录的用户角色和权限
         this.redisTemplate.opsForHash().putAll(session,map);
-        this.redisTemplate.expire(session,8,TimeUnit.HOURS);   //登录信息8小时后过期
+        this.redisTemplate.expire(session,10,TimeUnit.HOURS);   //登录信息8小时后过期
         return resultDataWrapper(ResultEnum.LOGIN_SUCCESS, map); //返回登录成功信息、session,用户名信息
     }
 
@@ -181,6 +187,6 @@ public class MemberController extends AbstractBaseController {
 
     @GetMapping("/autherror")
     public String autherror(int code) {
-        return code == 1 ? "未登录" : "未授权";
+        return code == 1 ? "weidenglu" : "weishouquan";
     }
 }

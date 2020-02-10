@@ -7,10 +7,12 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import cn.hutool.poi.excel.cell.CellUtil;
 import com.zxhz.dao.IUserInfoDAO;
+import com.zxhz.dao.members.MembersMapper;
 import com.zxhz.enums.ResultEnum;
 import com.zxhz.pojo.Course;
 import com.zxhz.pojo.HGpsCarInfo;
 import com.zxhz.pojo.Student;
+import com.zxhz.pojo.members.Members;
 import com.zxhz.utils.JxlsUtil;
 import org.jxls.common.Context;
 import com.zxhz.pojo.Fu;
@@ -40,9 +42,15 @@ public class TestCommon {
     private MongoTemplate mongoTemplate;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private  MembersMapper membersMapper;
 
     @Test
     public void testGet() {
+    Members members=new Members();
+    members.setMid("2222");
+    System.out.println(members);
+    System.out.println(this.membersMapper.insertSelective(members));
     }
 
     @Test

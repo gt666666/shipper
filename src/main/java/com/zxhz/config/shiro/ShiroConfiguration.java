@@ -56,13 +56,14 @@ public class ShiroConfiguration {
          *
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
-        //filterMap.put("/login","anon");  //开放权限，可以理解为匿名用户或游客
-        //filterMap.put("/**", "authc");//当前请求地址必须认证之后可以访问
+        filterMap.put("/login","anon");  //开放权限，可以理解为匿名用户或游客
+        filterMap.put("/autherror","anon");  //开放权限，可以理解为匿名用户或游客
         //使用过滤器的形式配置请求地址的依赖权限
         //filterMap.put("/member/home", "perms[dept:list]"); //不具备指定的权限，跳转到setUnauthorizedUrl地址
         //使用过滤器的形式配置请求地址的依赖角色
-        //filterMap.put("/member/home","roles[dept]");//不具备指定的角色,跳转到setUnauthorizedUrl地址
-        // filterMap.put("/member/home","anon");  //开放权限，可以理解为匿名用户或游客
+        filterMap.put("/member/home","roles[erp]");//不具备指定的角色,跳转到setUnauthorizedUrl地址
+        filterMap.put("/**", "authc");//当前请求地址必须认证之后可以访问
+
         filterFactory.setFilterChainDefinitionMap(filterMap);
         return filterFactory;
     }
@@ -87,6 +88,7 @@ public class ShiroConfiguration {
      */
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO sessionDAO = new RedisSessionDAO();
+        sessionDAO.setExpire(36000);   //session 失效时间为10个小时
         sessionDAO.setRedisManager(this.redisManager());
         return sessionDAO;
     }
@@ -106,6 +108,7 @@ public class ShiroConfiguration {
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(this.redisManager());
+        redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
     }
 

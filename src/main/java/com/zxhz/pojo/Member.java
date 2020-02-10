@@ -13,7 +13,6 @@ import java.util.Date;
  */
 @Data
 public class Member implements Serializable {
-    private String id;
     private String mid;
     private String password;
     private String name;

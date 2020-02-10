@@ -41,7 +41,7 @@ spring:
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml    #mybatis配置文件所在路径
-  type-aliases-package: com.zxkj.vo      #定义所有操作类的别名所在包
+  type-aliases-package: com.zxhz.pojo      #定义所有操作类的别名所在包
   mapper-locations: classpath:mybatis/mapper/**/*.xml  #所有的mapper映射文件
 
 logging:
