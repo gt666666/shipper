@@ -109,6 +109,7 @@ public class ShiroConfiguration {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(this.redisManager());
         redisCacheManager.setPrincipalIdFieldName("id");
+        redisCacheManager.setExpire(36000); //授权失效时间为10个小时
         return redisCacheManager;
     }
 
