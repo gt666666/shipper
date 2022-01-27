@@ -116,7 +116,7 @@
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>2.3.0</version>
+            <version>2.12.2</version>
         </dependency>
 
         <!--jxls2.x模板导出excel-->
